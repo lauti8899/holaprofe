@@ -78,6 +78,27 @@
     <p id="reflejoResultado"></p>
   </div>
 
+  <div class="juego locked" id="juego4">
+  <h2>Juego 4: Preguntas y Respuestas</h2>
+  <p id="pregunta">¿Cuál es el lenguaje de programación más usado?</p>
+  <button onclick="respuestaQuiz('Python')">Python</button>
+  <button onclick="respuestaQuiz('HTML')">HTML</button>
+  <button onclick="respuestaQuiz('Java')">Java</button>
+  <p id="quizResultado"></p>
+</div>
+  
+<script>
+  function respuestaQuiz(opcion) {
+    const res = document.getElementById("quizResultado");
+    if (opcion === "Python") {
+      res.textContent = "¡Correcto!";
+      desbloquear(5);
+    } else {
+      res.textContent = "Intenta otra vez.";
+    }
+  }
+</script>
+
   <script>
     // Cargar progreso
     let progreso = parseInt(localStorage.getItem("juegosDesbloqueados")) || 1;
