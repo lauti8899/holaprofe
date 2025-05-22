@@ -1,98 +1,95 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zona Tecno</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Zona Tecno PRO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', sans-serif;
+    :root {
+      --bg-dark: #0f2027;
+      --bg-light: #ffffff;
+      --text-dark: #ffffff;
+      --text-light: #111111;
+      --accent: #00e0ff;
+      --neon: 0 0 10px #00e0ff, 0 0 20px #00e0ff, 0 0 40px #00e0ff;
     }
 
     body {
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      color: white;
-      line-height: 1.6;
-      overflow-x: hidden;
+      font-family: 'Orbitron', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+      transition: background-color 0.4s, color 0.4s;
     }
 
     header {
-      background: rgba(0,0,0,0.6);
       padding: 20px;
       text-align: center;
+      background: rgba(0,0,0,0.5);
       animation: fadeIn 2s ease;
     }
 
     header h1 {
-      font-size: 2.5em;
-      color: #00e0ff;
+      font-size: 1.5em;
+      color: var(--accent);
+      text-shadow: var(--neon);
     }
 
     nav {
       background: #111;
       padding: 10px;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
+      text-align: center;
     }
 
     nav a {
       color: white;
       text-decoration: none;
-      margin: 10px 15px;
-      transition: color 0.3s ease;
-    }
-
-    nav a:hover {
-      color: #00e0ff;
-    }
-
-    section {
-      padding: 40px 20px;
-      animation: slideUp 1.5s ease;
+      margin: 0 15px;
     }
 
     .card {
-      background: rgba(255,255,255,0.1);
-      padding: 20px;
-      margin: 20px auto;
-      border-radius: 10px;
       max-width: 800px;
-      box-shadow: 0 0 10px #000;
-      transition: transform 0.3s ease;
-    }
-
-    .card:hover {
-      transform: scale(1.02);
-    }
-
-    footer {
-      background: #111;
-      text-align: center;
+      margin: 30px auto;
       padding: 20px;
-      font-size: 0.9em;
-      color: #aaa;
-    }
-
-    button, input {
-      padding: 10px;
-      margin: 5px;
-      border: none;
-      border-radius: 5px;
-      font-size: 1em;
+      background: rgba(255,255,255,0.05);
+      border-radius: 15px;
+      box-shadow: 0 0 10px #000;
+      text-align: center;
     }
 
     button {
-      background: #00e0ff;
-      color: #000;
+      background: var(--accent);
+      color: black;
+      border: none;
+      padding: 10px;
+      margin: 5px;
+      border-radius: 5px;
       cursor: pointer;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 14px;
+      box-shadow: var(--neon);
     }
 
-    button:hover {
-      background: #00bcd4;
+    input {
+      padding: 10px;
+      font-size: 14px;
+      border-radius: 5px;
+      margin: 5px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 12px;
+      background: #111;
+    }
+
+    .mode-toggle {
+      position: fixed;
+      top: 10px;
+      right: 10px;
     }
 
     @keyframes fadeIn {
@@ -100,139 +97,123 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @media (max-width: 600px) {
+    @media screen and (max-width: 600px) {
       header h1 {
-        font-size: 2em;
-      }
-
-      .card {
-        margin: 10px;
-        padding: 15px;
+        font-size: 1.2em;
       }
     }
   </style>
 </head>
 <body>
+  <button class="mode-toggle" onclick="toggleMode()">Cambiar modo</button>
 
   <header>
-    <h1>Zona Tecno</h1>
-    <p>Tu portal sobre computación y tecnología</p>
+    <h1>🎮 Zona Tecno PRO</h1>
+    <p>Explorá, jugá y aprendé con estilo</p>
   </header>
 
   <nav>
-    <a href="#articulo1">Hardware</a>
-    <a href="#articulo2">Software</a>
-    <a href="#articulo3">Lenguajes</a>
-    <a href="#juegos">Minijuegos</a>
+    <a href="#juego1">Número</a>
+    <a href="#juego2">Piedra</a>
+    <a href="#juego3">Reflejos</a>
+    <a href="#juego4">Trivia</a>
   </nav>
 
-  <section>
-    <div id="articulo1" class="card">
-      <h2>¿Qué es el Hardware?</h2>
-      <p>El hardware es la parte física de una computadora: el monitor, el teclado, el mouse, el disco duro, y todos los componentes internos como la placa madre o la memoria RAM.</p>
-    </div>
+  <div class="card" id="juego1">
+    <h2>Adivina el número</h2>
+    <input type="number" id="numInput" placeholder="1 a 10" />
+    <button onclick="checkNumber()">Probar</button>
+    <p id="resultadoNum"></p>
+  </div>
 
-    <div id="articulo2" class="card">
-      <h2>¿Qué es el Software?</h2>
-      <p>El software es el conjunto de programas que permiten que el hardware funcione. Incluye sistemas operativos, videojuegos, navegadores y apps que usamos todos los días.</p>
-    </div>
+  <div class="card" id="juego2">
+    <h2>Piedra, Papel o Tijera</h2>
+    <button onclick="jugar('piedra')">✊</button>
+    <button onclick="jugar('papel')">✋</button>
+    <button onclick="jugar('tijera')">✌️</button>
+    <p id="pptResultado"></p>
+  </div>
 
-    <div id="articulo3" class="card">
-      <h2>Lenguajes de Programación</h2>
-      <p>Existen muchos lenguajes: Python, JavaScript, C++, y más. Cada uno sirve para diferentes tareas. Por ejemplo, Python es ideal para aprender a programar y crear videojuegos como los tuyos.</p>
-    </div>
+  <div class="card" id="juego3">
+    <h2>Click Rápido</h2>
+    <button id="iniciar" onclick="iniciarReflejo()">Iniciar</button>
+    <button id="clickYa" style="display:none;" onclick="terminarReflejo()">¡Ahora!</button>
+    <p id="reflejoResultado"></p>
+  </div>
 
-    <div id="juegos" class="card">
-      <h2>🎮 Minijuegos</h2>
+  <div class="card" id="juego4">
+    <h2>Trivia de Computación</h2>
+    <p id="pregunta">¿Qué es HTML?</p>
+    <button onclick="respuesta(0)">Un sistema operativo</button>
+    <button onclick="respuesta(1)">Un lenguaje de marcado</button>
+    <button onclick="respuesta(2)">Un virus</button>
+    <p id="resultadoTrivia"></p>
+  </div>
 
-      <!-- Juego 1: Número Secreto -->
-      <div style="margin-bottom: 20px;">
-        <h3>1️⃣ Adivina el número secreto</h3>
-        <input type="number" id="guess" placeholder="Ingresa un número del 1 al 10">
-        <button onclick="checkGuess()">Probar</button>
-        <p id="guessResult"></p>
-      </div>
-
-      <!-- Juego 2: Piedra, Papel o Tijera -->
-      <div style="margin-bottom: 20px;">
-        <h3>✊✋✌️ Piedra, Papel o Tijera</h3>
-        <button onclick="play('piedra')">Piedra</button>
-        <button onclick="play('papel')">Papel</button>
-        <button onclick="play('tijera')">Tijera</button>
-        <p id="pptResult"></p>
-      </div>
-
-      <!-- Juego 3: Reflejos -->
-      <div>
-        <h3>⚡ Click Rápido</h3>
-        <button id="startReflejo" onclick="startReflex()">Iniciar</button>
-        <button id="reflejoBtn" style="display:none;" onclick="stopReflex()">¡Click!</button>
-        <p id="reflejoResultado"></p>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    Creado por Lautaro · 2025 · Para la clase de Computación
-  </footer>
+  <footer>Creado por Lautaro · 2025 · Clase de Computación</footer>
 
   <script>
-    // Juego 1: Número secreto
+    // Modo claro/oscuro
+    let modoClaro = false;
+    function toggleMode() {
+      modoClaro = !modoClaro;
+      document.body.style.backgroundColor = modoClaro ? '#ffffff' : '#0f2027';
+      document.body.style.color = modoClaro ? '#000000' : '#ffffff';
+    }
+
+    // Juego 1
     let secreto = Math.floor(Math.random() * 10) + 1;
-    function checkGuess() {
-      const valor = parseInt(document.getElementById("guess").value);
-      const resultado = document.getElementById("guessResult");
-      if (valor === secreto) {
-        resultado.textContent = "¡Correcto! Era " + secreto;
+    function checkNumber() {
+      const num = parseInt(document.getElementById("numInput").value);
+      const res = document.getElementById("resultadoNum");
+      if (num === secreto) {
+        res.textContent = "¡Correcto!";
         secreto = Math.floor(Math.random() * 10) + 1;
       } else {
-        resultado.textContent = "Incorrecto, intentá de nuevo.";
+        res.textContent = "Intenta otra vez.";
       }
     }
 
-    // Juego 2: Piedra, Papel o Tijera
-    function play(userChoice) {
-      const choices = ['piedra', 'papel', 'tijera'];
-      const cpu = choices[Math.floor(Math.random() * 3)];
-      let result = "";
-      if (userChoice === cpu) {
-        result = "Empate. Ambos eligieron " + cpu;
-      } else if (
-        (userChoice === "piedra" && cpu === "tijera") ||
-        (userChoice === "papel" && cpu === "piedra") ||
-        (userChoice === "tijera" && cpu === "papel")
-      ) {
-        result = "¡Ganaste! Vos: " + userChoice + " | PC: " + cpu;
-      } else {
-        result = "Perdiste. Vos: " + userChoice + " | PC: " + cpu;
-      }
-      document.getElementById("pptResult").textContent = result;
+    // Juego 2
+    function jugar(eleccion) {
+      const opciones = ["piedra", "papel", "tijera"];
+      const pc = opciones[Math.floor(Math.random() * 3)];
+      let resultado = "";
+      if (eleccion === pc) resultado = "Empate.";
+      else if (
+        (eleccion === "piedra" && pc === "tijera") ||
+        (eleccion === "papel" && pc === "piedra") ||
+        (eleccion === "tijera" && pc === "papel")
+      ) resultado = "¡Ganaste!";
+      else resultado = "Perdiste.";
+      document.getElementById("pptResultado").textContent = "PC eligió " + pc + ". " + resultado;
     }
 
-    // Juego 3: Reflejos
-    let startTime;
-    function startReflex() {
+    // Juego 3
+    let tiempoInicio;
+    function iniciarReflejo() {
       document.getElementById("reflejoResultado").textContent = "";
-      document.getElementById("startReflejo").disabled = true;
+      document.getElementById("iniciar").disabled = true;
       setTimeout(() => {
-        document.getElementById("reflejoBtn").style.display = "inline-block";
-        startTime = new Date().getTime();
-      }, Math.random() * 3000 + 1000); // de 1 a 4 segundos
+        document.getElementById("clickYa").style.display = "inline";
+        tiempoInicio = new Date().getTime();
+      }, Math.random() * 3000 + 1000);
     }
 
-    function stopReflex() {
-      const endTime = new Date().getTime();
-      const reactionTime = endTime - startTime;
-      document.getElementById("reflejoResultado").textContent = "¡Tu tiempo de reacción fue: " + reactionTime + " ms!";
-      document.getElementById("reflejoBtn").style.display = "none";
-      document.getElementById("startReflejo").disabled = false;
+    function terminarReflejo() {
+      const tiempoFin = new Date().getTime();
+      const tiempo = tiempoFin - tiempoInicio;
+      document.getElementById("reflejoResultado").textContent = "¡Tiempo: " + tiempo + " ms!";
+      document.getElementById("clickYa").style.display = "none";
+      document.getElementById("iniciar").disabled = false;
+    }
+
+    // Juego 4
+    function respuesta(opcion) {
+      const res = document.getElementById("resultadoTrivia");
+      if (opcion === 1) res.textContent = "¡Correcto! HTML es un lenguaje de marcado.";
+      else res.textContent = "Incorrecto.";
     }
   </script>
-
 </body>
 </html>
