@@ -86,6 +86,174 @@
   <button onclick="respuestaQuiz('Java')">Java</button>
   <p id="quizResultado"></p>
 </div>
+
+<div class="juego locked" id="juego5">
+  <h2>Juego 5: Memoria Numérica</h2>
+  <p id="mostrarNums">Memoriza: 7, 3, 9</p>
+  <input type="text" id="memoriaInput" placeholder="Escribe los números separados por coma">
+  <button onclick="verificarMemoria()">Verificar</button>
+  <p id="memoriaResultado"></p>
+</div>
+
+  <div class="juego locked" id="juego6" style="user-select:none;">
+  <h2>Juego 6: Salto Simple</h2>
+  <div id="plataforma" style="width:300px; height:150px; background:#111; margin: 0 auto; position: relative; overflow: hidden; border-radius:10px;">
+    <div id="jugador" style="width:30px; height:30px; background:#00e0ff; position:absolute; bottom:0; left:10px; border-radius:5px;"></div>
+  </div>
+  <button onclick="saltar()">Saltar</button>
+  <p id="saltoResultado"></p>
+</div>
+  
+  <div class="juego locked" id="juego7">
+  <h2>Juego 7: Arma la palabra</h2>
+  <p>Ordena las letras para formar: _ _ _ _ _</p>
+  <button onclick="verificarPalabra('t')">t</button>
+  <button onclick="verificarPalabra('o')">o</button>
+  <button onclick="verificarPalabra('r')">r</button>
+  <button onclick="verificarPalabra('t')">t</button>
+  <button onclick="verificarPalabra('a')">a</button>
+  <p id="puzzleResultado"></p>
+</div>
+
+  <div class="juego locked" id="juego8" style="user-select:none;">
+  <h2>Juego 8: Laberinto Básico</h2>
+  <p>Mueve el cuadrado azul con las flechas para llegar al círculo verde.</p>
+  <div id="laberinto" style="width:300px; height:300px; background:#222; margin: 0 auto; position: relative;">
+    <div id="player" style="width:30px; height:30px; background:#00e0ff; position:absolute; top:0; left:0; border-radius:5px;"></div>
+    <div id="meta" style="width:30px; height:30px; background:#0f0; position:absolute; top:270px; left:270px; border-radius:50%;"></div>
+  </div>
+  <p id="laberintoResultado"></p>
+</div>
+
+  <div class="juego locked" id="juego9">
+  <h2>Juego 9: Quiz de Computación</h2>
+  <p id="pregComp">¿Qué significa HTML?</p>
+  <button onclick="respuestaComp('HyperText Markup Language')">HyperText Markup Language</button>
+  <button onclick="respuestaComp('HighText Machine Language')">HighText Machine Language</button>
+  <button onclick="respuestaComp('HyperText Markdown Language')">HyperText Markdown Language</button>
+  <p id="compResultado"></p>
+</div>
+
+  <div class="juego locked" id="juego10" style="user-select:none;">
+  <h2>Juego 10: Boss Final</h2>
+  <p>Responde rápido y ganá</p>
+  <p id="bossPregunta">¿2 + 2 = ?</p>
+  <input type="number" id="bossInput" placeholder="Respuesta">
+  <button onclick="checkBoss()">Enviar</button>
+  <p id="bossResultado"></p>
+</div>
+  
+<script>
+  function checkBoss() {
+    const res = document.getElementById('bossResultado');
+    const val = parseInt(document.getElementById('bossInput').value);
+    if (val === 4) {
+      res.textContent = "¡Ganaste el Boss Final!";
+      alert("¡Completaste todos los juegos!");
+      localStorage.clear();
+      location.reload();
+    } else {
+      res.textContent = "Respuesta incorrecta, probá otra vez.";
+    }
+  }
+</script>
+
+
+  
+<script>
+  function respuestaComp(respuesta) {
+    const res = document.getElementById("compResultado");
+    if (respuesta === "HyperText Markup Language") {
+      res.textContent = "¡Correcto!";
+      desbloquear(10);
+    } else {
+      res.textContent = "Incorrecto, intentá de nuevo.";
+    }
+  }
+</script>
+  
+<script>
+  let px = 0;
+  let py = 0;
+  document.addEventListener('keydown', function(e) {
+    if (!document.getElementById("juego8").classList.contains('unlocked')) return;
+    const paso = 30;
+    const lab = document.getElementById('laberinto');
+    const player = document.getElementById('player');
+    if (e.key === 'ArrowRight' && px + paso <= lab.clientWidth - 30) px += paso;
+    if (e.key === 'ArrowLeft' && px - paso >= 0) px -= paso;
+    if (e.key === 'ArrowDown' && py + paso <= lab.clientHeight - 30) py += paso;
+    if (e.key === 'ArrowUp' && py - paso >= 0) py -= paso;
+    player.style.left = px + 'px';
+    player.style.top = py + 'px';
+    // Verificar llegada
+    if (px === 270 && py === 270) {
+      document.getElementById('laberintoResultado').textContent = "¡Llegaste a la meta!";
+      desbloquear(9);
+    }
+  });
+</script>
+  
+<script>
+  let palabraActual = "";
+  function verificarPalabra(letra) {
+    palabraActual += letra;
+    if (palabraActual.length === 5) {
+      if (palabraActual === "torta") {
+        document.getElementById("puzzleResultado").textContent = "¡Correcto!";
+        desbloquear(8);
+      } else {
+        document.getElementById("puzzleResultado").textContent = "Incorrecto, reinicia.";
+        palabraActual = "";
+      }
+    }
+  }
+</script>
+
+
+  
+<script>
+  let saltando = false;
+  function saltar() {
+    if (saltando) return;
+    saltando = true;
+    const jugador = document.getElementById("jugador");
+    let pos = 0;
+    let up = setInterval(() => {
+      if (pos >= 100) clearInterval(up);
+      else {
+        pos += 10;
+        jugador.style.bottom = pos + 'px';
+      }
+    }, 30);
+    setTimeout(() => {
+      let down = setInterval(() => {
+        if (pos <= 0) {
+          clearInterval(down);
+          saltando = false;
+          document.getElementById("saltoResultado").textContent = "¡Salto completado!";
+          desbloquear(7);
+        } else {
+          pos -= 10;
+          jugador.style.bottom = pos + 'px';
+        }
+      }, 30);
+    }, 400);
+  }
+</script>
+  
+<script>
+  function verificarMemoria() {
+    const input = document.getElementById("memoriaInput").value.replace(/\\s+/g, '');
+    const res = document.getElementById("memoriaResultado");
+    if (input === "7,3,9") {
+      res.textContent = "¡Bien! Memoria perfecta.";
+      desbloquear(6);
+    } else {
+      res.textContent = "No coincide, intentá de nuevo.";
+    }
+  }
+</script>
   
 <script>
   function respuestaQuiz(opcion) {
