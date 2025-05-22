@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zona Tecno</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: white;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: rgba(0,0,0,0.6);
+      padding: 20px;
+      text-align: center;
+      animation: fadeIn 2s ease;
+    }
+
+    header h1 {
+      font-size: 2.5em;
+      color: #00e0ff;
+    }
+
+    nav {
+      background: #111;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 10px 15px;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #00e0ff;
+    }
+
+    section {
+      padding: 40px 20px;
+      animation: slideUp 1.5s ease;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.1);
+      padding: 20px;
+      margin: 20px auto;
+      border-radius: 10px;
+      max-width: 800px;
+      box-shadow: 0 0 10px #000;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.02);
+    }
+
+    footer {
+      background: #111;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9em;
+      color: #aaa;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2em;
+      }
+
+      .card {
+        margin: 10px;
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Zona Tecno</h1>
+    <p>Tu portal sobre computación y tecnología</p>
+  </header>
+
+  <nav>
+    <a href="#articulo1">Hardware</a>
+    <a href="#articulo2">Software</a>
+    <a href="#articulo3">Lenguajes</a>
+  </nav>
+
+  <section>
+    <div id="articulo1" class="card">
+      <h2>¿Qué es el Hardware?</h2>
+      <p>El hardware es la parte física de una computadora: el monitor, el teclado, el mouse, el disco duro, y todos los componentes internos como la placa madre o la memoria RAM.</p>
+    </div>
+
+    <div id="articulo2" class="card">
+      <h2>¿Qué es el Software?</h2>
+      <p>El software es el conjunto de programas que permiten que el hardware funcione. Incluye sistemas operativos, videojuegos, navegadores y apps que usamos todos los días.</p>
+    </div>
+
+    <div id="articulo3" class="card">
+      <h2>Lenguajes de Programación</h2>
+      <p>Existen muchos lenguajes: Python, JavaScript, C++, y más. Cada uno sirve para diferentes tareas. Por ejemplo, Python es ideal para aprender a programar y crear videojuegos como los tuyos.</p>
+    </div>
+  </section>
+
+  <footer>
+    Creado por Lautaro · 2025 · Para la clase de Computación
+  </footer>
+
+</body>
+</html>
