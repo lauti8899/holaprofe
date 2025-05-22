@@ -1,191 +1,123 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Zona Tecno PRO</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg-dark: #0f2027;
-      --bg-light: #ffffff;
-      --text-dark: #ffffff;
-      --text-light: #111111;
-      --accent: #00e0ff;
-      --neon: 0 0 10px #00e0ff, 0 0 20px #00e0ff, 0 0 40px #00e0ff;
-    }
-
     body {
       font-family: 'Orbitron', sans-serif;
+      background: #0f2027;
+      color: #fff;
       margin: 0;
       padding: 0;
-      background-color: var(--bg-dark);
-      color: var(--text-dark);
-      transition: background-color 0.4s, color 0.4s;
-    }
-
-    header {
-      padding: 20px;
-      text-align: center;
-      background: rgba(0,0,0,0.5);
-      animation: fadeIn 2s ease;
-    }
-
-    header h1 {
-      font-size: 1.5em;
-      color: var(--accent);
-      text-shadow: var(--neon);
-    }
-
-    nav {
-      background: #111;
-      padding: 10px;
       text-align: center;
     }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin: 0 15px;
+    h1 {
+      color: #00e0ff;
+      text-shadow: 0 0 10px #00e0ff;
+      margin-top: 20px;
     }
-
-    .card {
-      max-width: 800px;
+    .juego {
       margin: 30px auto;
       padding: 20px;
+      width: 90%;
+      max-width: 500px;
       background: rgba(255,255,255,0.05);
       border-radius: 15px;
       box-shadow: 0 0 10px #000;
-      text-align: center;
     }
-
     button {
-      background: var(--accent);
+      background: #00e0ff;
       color: black;
       border: none;
-      padding: 10px;
+      padding: 10px 20px;
       margin: 5px;
       border-radius: 5px;
-      cursor: pointer;
       font-family: 'Orbitron', sans-serif;
-      font-size: 14px;
-      box-shadow: var(--neon);
+      cursor: pointer;
+      box-shadow: 0 0 10px #00e0ff;
     }
-
-    input {
-      padding: 10px;
-      font-size: 14px;
-      border-radius: 5px;
-      margin: 5px;
+    .locked {
+      filter: blur(3px);
+      opacity: 0.5;
+      pointer-events: none;
     }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      font-size: 12px;
-      background: #111;
-    }
-
-    .mode-toggle {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @media screen and (max-width: 600px) {
-      header h1 {
-        font-size: 1.2em;
-      }
+    .unlocked {
+      filter: none;
+      opacity: 1;
+      pointer-events: auto;
+      transition: all 0.5s;
     }
   </style>
 </head>
 <body>
-  <button class="mode-toggle" onclick="toggleMode()">Cambiar modo</button>
+  <h1>🎮 Zona Tecno PRO</h1>
+  <p>Desbloqueá los juegos uno por uno</p>
 
-  <header>
-    <h1>🎮 Zona Tecno PRO</h1>
-    <p>Explorá, jugá y aprendé con estilo</p>
-  </header>
-
-  <nav>
-    <a href="#juego1">Número</a>
-    <a href="#juego2">Piedra</a>
-    <a href="#juego3">Reflejos</a>
-    <a href="#juego4">Trivia</a>
-  </nav>
-
-  <div class="card" id="juego1">
-    <h2>Adivina el número</h2>
-    <input type="number" id="numInput" placeholder="1 a 10" />
-    <button onclick="checkNumber()">Probar</button>
+  <div class="juego" id="juego1">
+    <h2>Juego 1: Adivina el número</h2>
+    <input type="number" id="numInput" placeholder="1 a 5">
+    <button onclick="jugarNumero()">Probar</button>
     <p id="resultadoNum"></p>
   </div>
 
-  <div class="card" id="juego2">
-    <h2>Piedra, Papel o Tijera</h2>
-    <button onclick="jugar('piedra')">✊</button>
-    <button onclick="jugar('papel')">✋</button>
-    <button onclick="jugar('tijera')">✌️</button>
+  <div class="juego locked" id="juego2">
+    <h2>Juego 2: Piedra, Papel o Tijera</h2>
+    <button onclick="ppt('piedra')">✊</button>
+    <button onclick="ppt('papel')">✋</button>
+    <button onclick="ppt('tijera')">✌️</button>
     <p id="pptResultado"></p>
   </div>
 
-  <div class="card" id="juego3">
-    <h2>Click Rápido</h2>
+  <div class="juego locked" id="juego3">
+    <h2>Juego 3: Click Rápido</h2>
     <button id="iniciar" onclick="iniciarReflejo()">Iniciar</button>
     <button id="clickYa" style="display:none;" onclick="terminarReflejo()">¡Ahora!</button>
     <p id="reflejoResultado"></p>
   </div>
 
-  <div class="card" id="juego4">
-    <h2>Trivia de Computación</h2>
-    <p id="pregunta">¿Qué es HTML?</p>
-    <button onclick="respuesta(0)">Un sistema operativo</button>
-    <button onclick="respuesta(1)">Un lenguaje de marcado</button>
-    <button onclick="respuesta(2)">Un virus</button>
-    <p id="resultadoTrivia"></p>
-  </div>
-
-  <footer>Creado por Lautaro · 2025 · Clase de Computación</footer>
-
   <script>
-    // Modo claro/oscuro
-    let modoClaro = false;
-    function toggleMode() {
-      modoClaro = !modoClaro;
-      document.body.style.backgroundColor = modoClaro ? '#ffffff' : '#0f2027';
-      document.body.style.color = modoClaro ? '#000000' : '#ffffff';
+    // Cargar progreso
+    let progreso = parseInt(localStorage.getItem("juegosDesbloqueados")) || 1;
+
+    function actualizarDesbloqueo() {
+      for (let i = 1; i <= 10; i++) {
+        const juego = document.getElementById("juego" + i);
+        if (!juego) continue;
+        if (i <= progreso) {
+          juego.classList.remove("locked");
+          juego.classList.add("unlocked");
+        }
+      }
     }
 
     // Juego 1
-    let secreto = Math.floor(Math.random() * 10) + 1;
-    function checkNumber() {
-      const num = parseInt(document.getElementById("numInput").value);
+    let secreto = Math.floor(Math.random() * 5) + 1;
+    function jugarNumero() {
+      const valor = parseInt(document.getElementById("numInput").value);
       const res = document.getElementById("resultadoNum");
-      if (num === secreto) {
+      if (valor === secreto) {
         res.textContent = "¡Correcto!";
-        secreto = Math.floor(Math.random() * 10) + 1;
+        desbloquear(2);
       } else {
         res.textContent = "Intenta otra vez.";
       }
     }
 
     // Juego 2
-    function jugar(eleccion) {
+    function ppt(eleccion) {
       const opciones = ["piedra", "papel", "tijera"];
       const pc = opciones[Math.floor(Math.random() * 3)];
       let resultado = "";
       if (eleccion === pc) resultado = "Empate.";
-      else if (
-        (eleccion === "piedra" && pc === "tijera") ||
-        (eleccion === "papel" && pc === "piedra") ||
-        (eleccion === "tijera" && pc === "papel")
-      ) resultado = "¡Ganaste!";
-      else resultado = "Perdiste.";
+      else if ((eleccion === "piedra" && pc === "tijera") ||
+               (eleccion === "papel" && pc === "piedra") ||
+               (eleccion === "tijera" && pc === "papel")) {
+        resultado = "¡Ganaste!";
+        desbloquear(3);
+      } else resultado = "Perdiste.";
       document.getElementById("pptResultado").textContent = "PC eligió " + pc + ". " + resultado;
     }
 
@@ -206,14 +138,20 @@
       document.getElementById("reflejoResultado").textContent = "¡Tiempo: " + tiempo + " ms!";
       document.getElementById("clickYa").style.display = "none";
       document.getElementById("iniciar").disabled = false;
+      desbloquear(4);
     }
 
-    // Juego 4
-    function respuesta(opcion) {
-      const res = document.getElementById("resultadoTrivia");
-      if (opcion === 1) res.textContent = "¡Correcto! HTML es un lenguaje de marcado.";
-      else res.textContent = "Incorrecto.";
+    // Desbloquear siguiente
+    function desbloquear(nivel) {
+      if (nivel > progreso) {
+        progreso = nivel;
+        localStorage.setItem("juegosDesbloqueados", progreso);
+        actualizarDesbloqueo();
+        alert("¡Desbloqueaste el Juego " + nivel + "!");
+      }
     }
+
+    actualizarDesbloqueo();
   </script>
 </body>
 </html>
