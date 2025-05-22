@@ -77,6 +77,24 @@
       color: #aaa;
     }
 
+    button, input {
+      padding: 10px;
+      margin: 5px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+
+    button {
+      background: #00e0ff;
+      color: #000;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #00bcd4;
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(-20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -110,6 +128,7 @@
     <a href="#articulo1">Hardware</a>
     <a href="#articulo2">Software</a>
     <a href="#articulo3">Lenguajes</a>
+    <a href="#juegos">Minijuegos</a>
   </nav>
 
   <section>
@@ -127,11 +146,93 @@
       <h2>Lenguajes de Programación</h2>
       <p>Existen muchos lenguajes: Python, JavaScript, C++, y más. Cada uno sirve para diferentes tareas. Por ejemplo, Python es ideal para aprender a programar y crear videojuegos como los tuyos.</p>
     </div>
+
+    <div id="juegos" class="card">
+      <h2>🎮 Minijuegos</h2>
+
+      <!-- Juego 1: Número Secreto -->
+      <div style="margin-bottom: 20px;">
+        <h3>1️⃣ Adivina el número secreto</h3>
+        <input type="number" id="guess" placeholder="Ingresa un número del 1 al 10">
+        <button onclick="checkGuess()">Probar</button>
+        <p id="guessResult"></p>
+      </div>
+
+      <!-- Juego 2: Piedra, Papel o Tijera -->
+      <div style="margin-bottom: 20px;">
+        <h3>✊✋✌️ Piedra, Papel o Tijera</h3>
+        <button onclick="play('piedra')">Piedra</button>
+        <button onclick="play('papel')">Papel</button>
+        <button onclick="play('tijera')">Tijera</button>
+        <p id="pptResult"></p>
+      </div>
+
+      <!-- Juego 3: Reflejos -->
+      <div>
+        <h3>⚡ Click Rápido</h3>
+        <button id="startReflejo" onclick="startReflex()">Iniciar</button>
+        <button id="reflejoBtn" style="display:none;" onclick="stopReflex()">¡Click!</button>
+        <p id="reflejoResultado"></p>
+      </div>
+    </div>
   </section>
 
   <footer>
     Creado por Lautaro · 2025 · Para la clase de Computación
   </footer>
+
+  <script>
+    // Juego 1: Número secreto
+    let secreto = Math.floor(Math.random() * 10) + 1;
+    function checkGuess() {
+      const valor = parseInt(document.getElementById("guess").value);
+      const resultado = document.getElementById("guessResult");
+      if (valor === secreto) {
+        resultado.textContent = "¡Correcto! Era " + secreto;
+        secreto = Math.floor(Math.random() * 10) + 1;
+      } else {
+        resultado.textContent = "Incorrecto, intentá de nuevo.";
+      }
+    }
+
+    // Juego 2: Piedra, Papel o Tijera
+    function play(userChoice) {
+      const choices = ['piedra', 'papel', 'tijera'];
+      const cpu = choices[Math.floor(Math.random() * 3)];
+      let result = "";
+      if (userChoice === cpu) {
+        result = "Empate. Ambos eligieron " + cpu;
+      } else if (
+        (userChoice === "piedra" && cpu === "tijera") ||
+        (userChoice === "papel" && cpu === "piedra") ||
+        (userChoice === "tijera" && cpu === "papel")
+      ) {
+        result = "¡Ganaste! Vos: " + userChoice + " | PC: " + cpu;
+      } else {
+        result = "Perdiste. Vos: " + userChoice + " | PC: " + cpu;
+      }
+      document.getElementById("pptResult").textContent = result;
+    }
+
+    // Juego 3: Reflejos
+    let startTime;
+    function startReflex() {
+      document.getElementById("reflejoResultado").textContent = "";
+      document.getElementById("startReflejo").disabled = true;
+      setTimeout(() => {
+        document.getElementById("reflejoBtn").style.display = "inline-block";
+        startTime = new Date().getTime();
+      }, Math.random() * 3000 + 1000); // de 1 a 4 segundos
+    }
+
+    function stopReflex() {
+      const endTime = new Date().getTime();
+      const reactionTime = endTime - startTime;
+      document.getElementById("reflejoResultado").textContent = "¡Tu tiempo de reacción fue: " + reactionTime + " ms!";
+      document.getElementById("reflejoBtn").style.display = "none";
+      document.getElementById("startReflejo").disabled = false;
+    }
+  </script>
 
 </body>
 </html>
